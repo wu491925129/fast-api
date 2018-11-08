@@ -1,0 +1,206 @@
+<style scoped>
+    .layout-logo{
+        width: 100px;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+    }
+    .layout-nav{
+        float: right;
+        margin: 0 auto;
+        margin-right: 20px;
+    }
+    .layout-header-bar{
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    .layout-logo-left{
+        width: 90%;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        margin: 15px auto;
+    }
+    .menu-icon{
+        transition: all .3s;
+    }
+    .rotate-icon{
+        transform: rotate(-90deg);
+    }
+    .menu-item span{
+        display: inline-block;
+        overflow: hidden;
+        width: 69px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: width .2s ease .2s;
+    }
+    .menu-item i{
+        transform: translateX(0px);
+        transition: font-size .2s ease, transform .2s ease;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    .collapsed-menu span{
+        width: 0px;
+        transition: width .2s ease;
+    }
+    .collapsed-menu i{
+        transform: translateX(5px);
+        transition: font-size .2s ease .2s, transform .2s ease .2s;
+        vertical-align: middle;
+        font-size: 22px;
+    }
+    .lock-screen-btn-con {
+        cursor: pointer;
+    }
+</style>
+<template>
+    <div style="height:100%">
+        <Layout>
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo"></div>
+                    <div class="layout-nav">
+                        <!-- 选项 -->
+                        <MenuItem 
+                            v-for="(item,index) in navList" 
+                            :key="index" 
+                            :name="'1-'+index"
+                            v-if="!item.hidden">
+                            <Icon :type="item.icon"></Icon>
+                            {{navlangs(index)}}
+                        </MenuItem>
+                        <!-- 语言选择 -->
+                        <Submenu name="5">
+                            <template slot="title">
+                                <Icon type="ios-stats" />
+                                {{language}}
+                            </template>
+                            <!-- click.native 普通的click监听不生效，
+                                故使用click.native监听原生点击事件 -->
+                            <MenuItem 
+                                v-for="(item,index) in langs" 
+                                :key="index" 
+                                :name="'5-'+index"
+                                @click.native="changeLanguage(item.code)">
+                                {{item.name}}
+                            </MenuItem>
+                        </Submenu>
+                        <MenuItem name="6">
+                            <lockScreen></lockScreen>
+                        </MenuItem>
+                        
+                    </div>
+                </Menu>
+            </Header>
+        </Layout>
+        
+        <Layout style="height:100%">
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+                <Menu active-name="2" theme="dark" width="auto" :class="menuitemClasses">
+                    <MenuItem 
+                        v-for="(item,index) in sliderList" 
+                        :key="index" 
+                        :name="index"
+                        v-if="!item.hidden">
+                        <Icon :type="item.icon"></Icon>
+                        <span>{{sliderLangs(index)}}</span>
+                    </MenuItem>
+                </Menu>
+            </Sider>
+            <Layout>
+                <Header :style="{padding: 0}" class="layout-header-bar">
+                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
+                </Header>
+                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                    {{$t("navList")[0]}}
+                    <Button type="primary" shape="circle" icon="ios-search"></Button>
+                    <Button type="primary" icon="ios-search">{{$t("searchBtn")}}</Button>
+                    <Button type="primary" shape="circle" icon="ios-search">{{$t("searchBtn")}}</Button>
+                    <Button type="primary" shape="circle">{{$t("searchBtn")}}</Button>
+                </Content>
+            </Layout>
+        </Layout>
+    </div>
+</template>
+<script>
+    import myLocalStorage from '../model/myLocalStorage.js'
+    import lockScreen from './lock/lockscreen.vue'
+    export default {
+        components: {
+            lockScreen,
+        },
+        data () {
+            return {
+                isCollapsed: false,
+                language:"选择语言",
+                langs:[
+                    {name:'简体中文',code:'zh'},
+                    {name:'繁体中文',code:'hk'},
+                    {name:'English',code:'en'},
+                    {name:'日本語',code:'jp'}
+                ],
+                navList:[],
+                sliderList:[]
+            }
+        },
+        // 计算属性
+        computed: {
+            rotateIcon () {
+                return [
+                    'menu-icon',
+                    this.isCollapsed ? 'rotate-icon' : ''
+                ];
+            },
+            menuitemClasses () {
+                return [
+                    'menu-item',
+                    this.isCollapsed ? 'collapsed-menu' : ''
+                ]
+            },
+            navlangs(){
+                // 计算属性使用闭包的方法缓解不能传参的尴尬
+                return (index) => {
+                    return this.$t("navList")[index];
+                }
+            },
+            sliderLangs(){
+                return (index) => {
+                    return this.$t("sliderList")[index].name;
+                }
+            }
+        },
+        mounted(){
+            // 初始化从store中拿数据
+            var code = myLocalStorage.get("language");
+            this.getLanguageByCode(code);
+            this.$i18n.locale = code;
+            this.navList = this.$store.state.navList;
+            this.sliderList = this.$store.state.sliderList;
+        },
+        methods: {
+            collapsedSider () {
+                this.$refs.side1.toggleCollapse();
+            },
+            changeLanguage(code){
+                this.$i18n.locale = code;
+                this.getLanguageByCode(code);
+                myLocalStorage.set('language',code);
+            },
+            getLanguageByCode(code){
+                // 根据语言代码获取语言名称
+                this.langs.forEach((info,index) => {
+                    if (info.code == code) {
+                        this.language = info.name;
+                    }
+                });
+            },
+        }
+    }
+</script>

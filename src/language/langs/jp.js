@@ -1,0 +1,31 @@
+// 日语
+module.exports = {
+    navList:["プロジェクト1","プロジェクト2","プロジェクト3","プロジェクト4"],
+    sliderList:[
+        {
+            name:"メニュー1",
+            child:{
+                name:"子オプション1"
+            }
+        },
+        {
+            name:"メニュー2",
+            child:{
+                name:"子オプション2"
+            }
+        },
+        {
+            name:"メニュー3",
+            child:{
+                name:"子オプション3"
+            }
+        },
+        {
+            name:"メニュー4",
+            child:{
+                name:"子オプション4"
+            }
+        },
+    ],
+    searchBtn:"クエリ",
+}

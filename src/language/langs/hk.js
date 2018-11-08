@@ -1,0 +1,31 @@
+// 粤语
+module.exports = {
+    navList:["項目1","項目2","項目3","項目4"],
+    sliderList:[
+        {
+            name:"菜單1",
+            child:{
+                name:"子選項1"
+            }
+        },
+        {
+            name:"菜單2",
+            child:{
+                name:"子選項2"
+            }
+        },
+        {
+            name:"菜單3",
+            child:{
+                name:"子選項3"
+            }
+        },
+        {
+            name:"菜單4",
+            child:{
+                name:"子選項4"
+            }
+        },
+    ],
+    searchBtn:"查詢",
+}
