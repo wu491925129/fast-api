@@ -1,0 +1,42 @@
+/*
+* @Author: wulong
+* @Date:   2018-07-12 09:55:48
+* @Last Modified by:   wulong
+* @Last Modified time: 2018-07-12 16:53:16
+*/
+h2{
+    margin:10px 0;
+}
+.p-20{
+    padding:20px 20px;
+}
+.title{
+    border-bottom: 5px solid #5cadffbf;
+}
+.p-r-5{
+    padding-right:5px;
+}
+.p-10{
+    padding: 0 10px;
+}
+.p-b-3{
+    padding-bottom: 3px;
+}
+.p-t-5{
+    padding-top: 5px;
+}
+.p-b-20{
+    padding-bottom: 20px;
+}
+.m-20{
+    margin:20px 20px;
+}
+.m-b-20{
+    margin-bottom:20px;
+}
+.m-b-10{
+    margin-bottom:10px;
+}
+.m-b-5{
+    margin-bottom:5px;
+}

@@ -28,4 +28,10 @@ module.exports = {
         },
     ],
     searchBtn:"クエリ",
+    indexPage:{
+        personAdd:"ユーザーの増加",
+        clickRate:"クリック量",
+        fileAdd:"新規ファイル",
+        shareCount:"統計を分ける"
+    }
 }

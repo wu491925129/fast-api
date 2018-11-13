@@ -28,4 +28,11 @@ module.exports = {
         },
     ],
     searchBtn:"search",
+    indexPage:{
+        personAdd:"New Users",
+        clickRate:"Click Rate",
+        fileAdd:"New File",
+        shareCount:"Share Count"
+
+    }
 }

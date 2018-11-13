@@ -33,4 +33,13 @@ module.exports = {
 
     /* 查询按钮 */
     searchBtn:"查询",
+
+    /* 首页 */
+    indexPage:{
+        personAdd:"新增用户",
+        clickRate:"点击量",
+        fileAdd:"新增文件",
+        shareCount:"分享统计"
+
+    }
 }

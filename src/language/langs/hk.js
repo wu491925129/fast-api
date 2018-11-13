@@ -28,4 +28,10 @@ module.exports = {
         },
     ],
     searchBtn:"查詢",
+    indexPage:{
+        personAdd:"新增用戶",
+        clickRate:"點擊量",
+        fileAdd:"新增檔案",
+        shareCount:"分享統計"
+    }
 }

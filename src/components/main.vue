@@ -119,18 +119,19 @@
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
                 </Header>
                 <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
-                    {{$t("navList")[0]}}
+                    <!-- {{$t("navList")[0]}}
                     <Button type="primary" shape="circle" icon="ios-search"></Button>
                     <Button type="primary" icon="ios-search">{{$t("searchBtn")}}</Button>
                     <Button type="primary" shape="circle" icon="ios-search">{{$t("searchBtn")}}</Button>
-                    <Button type="primary" shape="circle">{{$t("searchBtn")}}</Button>
+                    <Button type="primary" shape="circle">{{$t("searchBtn")}}</Button> -->
+                    <router-view></router-view>
                 </Content>
             </Layout>
         </Layout>
     </div>
 </template>
 <script>
-    import myLocalStorage from '../model/myLocalStorage.js'
+    import myLocalStorage from '@/model/myLocalStorage.js'
     import lockScreen from './lock/lockscreen.vue'
     export default {
         components: {
