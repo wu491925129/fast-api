@@ -40,7 +40,8 @@
                 placement="right" 
                 :closable="true" 
                 v-model="drawer"
-                width="90">
+                width="90"
+                @on-visible-change="test">
             <iframe class="fileFrame" frameborder="no" border="0" :src="fileUrl" @load="removeEl">
             </iframe>
         </Drawer>
@@ -62,7 +63,6 @@
         methods:{
             showDrawer(el){
                 this.$Spin.show();
-                this.fileUrl = '';
                 switch(el){
                     case 'word':
                         this.fileUrl = 'http://view.officeapps.live.com/op/view.aspx?src=newteach.pbworks.com%2Ff%2Fele%2Bnewsletter.docx';
@@ -78,6 +78,11 @@
             },
             removeEl(){
                 this.$Spin.hide();
+            },
+            test(el){
+                if (!el) {
+                    this.fileUrl = "";
+                }
             }
         }
     }

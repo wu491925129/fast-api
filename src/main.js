@@ -18,6 +18,10 @@ import store from './vuex/store.js'
 
 Vue.config.productionTip = false
 
+if (!localStorage.getItem('language')) {
+	localStorage.setItem('language','zh')
+}
+
 Vue.use(iView, {
     transfer: true,
     size: 'default'
