@@ -1,0 +1,72 @@
+{   
+    "code":200,
+    "data":{
+        "count": {
+            "personAdd":2536,
+            "clickRate":23461,
+            "fileAdd":352,
+            "shareCount":215
+        },
+
+        "personAddColums":[
+            {
+                "title": "用户名",
+                "key": "userName"
+            },
+            {
+                "title": "注册邮箱",
+                "key": "email"
+            },
+            {
+                "title": "注册时间",
+                "key": "createTime"
+            },
+            {
+                "title": "注册设备",
+                "key": "registOs"
+            }
+        ],
+
+        "clickRateColums":[
+            {
+                "title": "点击页面",
+                "key": "clickPage"
+            },
+            {
+                "title": "点击量",
+                "key": "clickCount"
+            }
+        ],
+
+        "fileAddColums":[
+            {
+                "title": "文件名称",
+                "key": "fileName"
+            },
+            {
+                "title": "上传用户",
+                "key": "userName"
+            },
+            {
+                "title": "上传时间",
+                "key": "uploadTime"
+            }
+        ],
+
+        "shareCountColums":[
+            {
+                "title": "分享页面",
+                "key": "sharePage"
+            },
+            {
+                "title": "分享用户",
+                "key": "shareUser"
+            },
+            {
+                "title": "分享时间",
+                "key": "shareTime"
+            }
+        ]
+    },
+    "msg":""
+}

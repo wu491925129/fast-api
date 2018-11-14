@@ -14,27 +14,19 @@ export const api = {
     /* 单点登录Api */
     ssoLoginApi:baseUrl+'/ssoLogin',
 
-    /* 交换首页数据 */
-    swapIndexApi:'static/swapIndex.json',
+    /* 首页 */
+    indexPageApi:'static/indexPage.json',
 
-    /* 交换结果 - 交换信息列表 */
-    swapResultApi:'static/swapResult.json',
+    /* 首页 - 获取新增用户列表 */
+    personAddApi:'static/personAdd.json',
 
-    /* 交换结果 - 详细信息 */
-    resultDetailApi:'static/resultDetail.json',
+    /* 首页 - 获取点击量列表 */
+    clickRateApi:'static/clickRate.json',
 
-     /* 交换任务数据 */
-     swapTaskApi:'static/swapTask.json',
+    /* 首页 - 获取新增文件列表 */
+    fileAddApi:'static/fileAdd.json',
 
-    /* 交换任务 - 信息详细列表 */
-    taskInfoApi:'static/taskInfo.json',
-
-    uploadFileApi:baseUrl+'/uploadFile',
-
-    /* 交换任务 - 获取所有交换任务 */
-    getAllTaskApi: baseUrl+'/task/getAllTask',
-
-    /* 交换任务 - 根据任务id获取任务 */
-    getTaskInfo: baseUrl + '/task/getTask'
+    /* 首页 - 获取分享列表 */
+    shareCountApi:'static/shareCount.json',
 
 }

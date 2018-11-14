@@ -6,7 +6,7 @@
                 <Col :xs="24" :sm="12" :md="6" class="p-r-5" @click.native="model('personAdd')">
                     <infoCard
                         id-name="person-add"
-                        :end-val="count.personAdd"
+                        :end-val="countList.personAdd"
                         iconType="md-person-add"
                         color="#2d8cf0"
                         :textSize="itemInfo.textSize"
@@ -16,27 +16,27 @@
                 <Col :xs="24" :sm="12" :md="6" class="p-r-5" @click.native="model('clickRate')">
                     <infoCard
                         id-name="click-rate"
-                        :end-val="count.clickRate"
+                        :end-val="countList.clickRate"
                         iconType="md-locate"
                         color="#64d572"
                         :textSize="itemInfo.textSize"
                         :intro-text='$t("indexPage").clickRate'
                     ></infoCard>
                 </Col>
-                <Col :xs="24" :sm="12" :md="6" class="p-r-5" >
+                <Col :xs="24" :sm="12" :md="6" class="p-r-5" @click.native="model('fileAdd')">
                     <infoCard
                         id-name="file-add"
-                        :end-val="count.fileAdd"
+                        :end-val="countList.fileAdd"
                         iconType="md-attach"
                         color="#fd7e14"
                         :textSize="itemInfo.textSize"
                         :intro-text='$t("indexPage").fileAdd'
                     ></infoCard>
                 </Col>
-                <Col :xs="24" :sm="12" :md="6" class="p-r-5" @click.native="model('err')">
+                <Col :xs="24" :sm="12" :md="6" class="p-r-5" @click.native="model('shareCount')">
                     <infoCard
                         id-name="share-count"
-                        :end-val="count.shareCount"
+                        :end-val="countList.shareCount"
                         iconType="md-share"
                         color="rgb(237, 63, 20)"
                         :textSize="itemInfo.textSize"
@@ -46,20 +46,12 @@
             </Col>
         </Row>
         <Modal
-            title="任务交换失败列表"
-            v-model="errModal"
+            :title="tableTitle"
+            v-model="dataModel"
             width="1000px"
             :styles="{top: '20px'}">
-            <Table stripe :columns="errColumns" :data="errData" :loading="errLoading" class="m-b-10"></Table>
-            <Page :total="errTotal" :page-size="5" current.sync="current" align="right" @on-change="pageChange('aaa')"></Page>
-        </Modal>
-        <Modal
-            title="任务交换预警汇总"
-            v-model="warningModal"
-            width="1000px"
-            :styles="{top: '20px'}">
-            <Table stripe :columns="warningColumns" :data="warningData" :loading="warningLoading" class="m-b-10"></Table>
-            <Page :total="warningTotal" :page-size="5" align="right" ></Page>
+            <Table stripe :columns="dataColumns" :data="dataList" :loading="tableLoading" class="m-b-10"></Table>
+            <Page :total="dataTotal" :page-size="5" current.sync="current" align="right" @on-change="pageChange"></Page>
         </Modal>
     </div>
 </template>
@@ -75,58 +67,15 @@
                 itemInfo:{
                     textSize:'20px'
                 },
-                count: {
-                    personAdd:2536,
-                    clickRate:23461,
-                    fileAdd:352,
-                    shareCount:215
-                },
-                errModal:false,
-                warningModal:false,
-                errLoading:true,
-                warningLoading:true,
-                errTotal:0,
-                warningTotal:0,
-                errColumns: [
-                    {
-                        title: '交换时间',
-                        key: 'currentSwapTime'
-                    },
-                    {
-                        title: '任务编号',
-                        key: 'taskNumber'
-                    },
-                    {
-                        title: '任务名称',
-                        key: 'taskName'
-                    },
-                    {
-                        title: '委办局',
-                        key: 'unit'
-                    }
-                ],
-                warningColumns: [
-                    {
-                        title: '交换时间',
-                        key: 'currentSwapTime'
-                    },
-                    {
-                        title: '任务编号',
-                        key: 'taskNumber'
-                    },
-                    {
-                        title: '任务名称',
-                        key: 'taskName'
-                    },
-                    {
-                        title: '委办局',
-                        key: 'unit'
-                    }
-                ],
-                errDataList:[],
-                errData:[],
-                warningDataList:[],
-                warningData:[]
+                countList:{},
+                indexPageData:{},
+                dataModel:false,
+                tableTitle:'',
+                tableLoading:true,
+                dataTotal:0,
+                dataColumns: [],
+                dataList:[],
+                tempDataList:[]
             }
         },
         components: {
@@ -137,93 +86,79 @@
         },
         methods:{
             getData(){
-                /* loading */
-               
+                myAjax.get({
+                    url: api.indexPageApi,   //请求url
+                    async:false,
+                    success:(res)=>{  // 成功
+                        if (res.code == 200) {
+                            this.indexPageData = res.data
+                            this.countList = res.data.count;
+                        }
+                    },
+                    fail:(err)=>{     // 失败
+                        console.log(err);
+                    }
+                });
             },
             change (status) {
                 this.scroll = !this.scroll
             },
             model(el){
-                if (el == 'err') {
-                    this.errModal = true;
-                    myAjax.get({
-                        url: api.swapResultApi,   //请求url
-                        success:(res)=>{  // 成功
-                            setTimeout(() => {
-                                this.errLoading = false;
-                            }, 500);
-                            this.errTotal = res.resultList.length;
-                            this.dataProcess(el,res.resultList,5);
-                        },
-                        fail:()=>{     // 失败
-                            console.log("error");
-                        }
-                    })
-                }else if(el == 'warning'){
-                    this.warningModal = true;
-                    myAjax.get({
-                        url: api.swapResultApi,   //请求url
-                        success:(res)=>{  // 成功
-                            setTimeout(() => {
-                                this.warningLoading = false;
-                            }, 500);
-                            this.warningTotal = res.resultList.length;
-                            this.dataProcess(el,res.resultList,5);
-                        },
-                        fail:()=>{     // 失败
-                            console.log("error");
-                        }
-                    })
+                this.tableTitle = this.$t('indexPage')[el];
+                this.dataColumns = this.indexPageData[el+"Colums"];
+                this.dataModel = true;
+                switch(el){
+                    case 'personAdd':
+                        this.getTableData(api.personAddApi);
+                        break;
+                    case 'clickRate':
+                        this.getTableData(api.clickRateApi);
+                        break;
+                    case 'fileAdd':
+                        this.getTableData(api.fileAddApi);
+                        break;
+                    case 'shareCount':
+                        this.getTableData(api.shareCountApi);
+                        break;
                 }
             },
-            dataProcess(el,array,size){
-                /* 大数组按照4个步长拆分成多个小数组 */
-                if (el == 'err') {
-                    const length = array.length
-                    if (!length || !size || size < 1) {
-                        this.errDataList = [];
+            getTableData(url){
+                this.dataList = [];
+                myAjax.get({
+                    url: url,   //请求url
+                    async:false,
+                    success:(res)=>{  // 成功
+                        if (res.code == 200) {
+                            this.dataProcess(res.data,5);
+                            this.dataTotal = res.data.length;
+                        }else{
+
+                        }  
+                    },
+                    fail:(err)=>{     // 失败
+                        console.log(err);
                     }
-                    let index = 0 //用来表示切割元素的范围start
-                    let resIndex = 0 //用来递增表示输出数组的下标
-                    let result = new Array(Math.ceil(length / size))
-                    while (index < length) {
-                      result[resIndex++] = array.slice(index, (index += size))
-                    }
-                    this.errDataList = result;
-                    // 给表格初始化第一页
-                    this.errData = this.errDataList[0];
-                }else if(el == "warning"){
-                    const length = array.length
-                    if (!length || !size || size < 1) {
-                        this.warningDataList = [];
-                    }
-                    let index = 0 //用来表示切割元素的范围start
-                    let resIndex = 0 //用来递增表示输出数组的下标
-                    let result = new Array(Math.ceil(length / size))
-                    while (index < length) {
-                      result[resIndex++] = array.slice(index, (index += size))
-                    }
-                    this.warningDataList = result;
-                    // 给表格初始化第一页
-                    this.warningData = this.warningDataList[0];
-                }else if(el == "carousel"){
-                    /* 大数组按照4个步长拆分成多个小数组 */
-                    const length = array.length
-                    if (!length || !size || size < 1) {
-                      this.swapInfoList = [];
-                    }
-                    let index = 0 //用来表示切割元素的范围start
-                    let resIndex = 0 //用来递增表示输出数组的下标
-                    let result = new Array(Math.ceil(length / size))
-                    while (index < length) {
-                      result[resIndex++] = array.slice(index, (index += size))
-                    }
-                    this.swapInfoList = result;
-                }
+                });
+                this.tableLoading = false;
             },
-            pageChange(pageNum,el){
-                console.log(current)
-                this.warningData = this.warningDataList[pageNum-1]
+            dataProcess(array,size){
+                /* 大数组按照5个步长拆分成多个小数组 */
+                const length = array.length
+                if (!length || !size || size < 1) {
+                    this.dataList = [];
+                }
+                let index = 0 //用来表示切割元素的范围start
+                let resIndex = 0 //用来递增表示输出数组的下标
+                let result = new Array(Math.ceil(length / size))
+                while (index < length) {
+                  result[resIndex++] = array.slice(index, (index += size))
+                }
+                this.tempDataList = result;
+                // 给表格初始化第一页
+                this.dataList = this.tempDataList[0];
+            },
+            pageChange(pageNum){
+                this.dataList = this.tempDataList[pageNum-1]
             }
         }
     }

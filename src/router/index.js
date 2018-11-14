@@ -23,6 +23,15 @@ export default new Router({
           },
            // 懒加载
           component:resolve=>require(['@/components/index/index.vue'],resolve)
+        },
+        {
+          path: '/file/read',
+          name: 'readFile',
+          meta: {
+              requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+          },
+           // 懒加载
+          component:resolve=>require(['@/components/file/readFile.vue'],resolve)
         }
       ]
     },

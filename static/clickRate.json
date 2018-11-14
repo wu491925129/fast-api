@@ -1,0 +1,18 @@
+{
+	"code":200,
+	"data":[
+		{
+			"clickPage":"index",
+			"clickCount":1345
+		},
+		{
+			"clickPage":"user",
+			"clickCount":1233
+		},
+		{
+			"clickPage":"test",
+			"clickCount":532
+		}
+	],
+	"msg":""
+}
