@@ -41,7 +41,7 @@
                 :closable="true" 
                 v-model="drawer"
                 width="90"
-                @on-visible-change="test">
+                @on-visible-change="changeDrawer">
             <iframe class="fileFrame" frameborder="no" border="0" :src="fileUrl" @load="removeEl">
             </iframe>
         </Drawer>
@@ -54,7 +54,8 @@
         data () {
             return {
                 drawer:false,
-                fileUrl:''
+                fileUrl:'',
+                timer: null
             }
         },
         mounted(){
@@ -79,11 +80,18 @@
             removeEl(){
                 this.$Spin.hide();
             },
-            test(el){
+            changeDrawer(el){
                 if (!el) {
                     this.fileUrl = "";
                 }
-            }
+                //this.setTimer();
+            },
+            setTimer(){
+        　　　　this.timer = setInterval(() => {
+                    var a = $('.fileFrame').contents();
+                    console.log($(a.prevObject).children("#WACRibbonPanel").remove())
+        　　　　}, 1000)
+        　　}
         }
     }
 </script>
