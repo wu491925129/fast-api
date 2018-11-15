@@ -16,6 +16,7 @@ const state = {
     token:myLocalStorage.get("token")?myLocalStorage.get("token"):'',
     isLogin:true,
     logMsg:'',
+    password:'',
     navList:[
         {
             'text':'',
@@ -113,6 +114,9 @@ const mutations = {
     },
     setLogMsg(state,msg){
         state.logMsg = msg;
+    },
+    setPassword(state,password){
+        state.password = password;
     },
     // 全局改变用户登录状态
     logout(state){

@@ -4,6 +4,7 @@ import routes from './routers'
 import store from '@/vuex/store'
 import iView from 'iview'
 import mySessionStorage from '@/model/mySessionStorage'
+import myLocalStorage from '@/model/myLocalStorage'
 
 Vue.use(Router)
 
@@ -23,13 +24,15 @@ const turnTo = (to, access, next) => {
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   const token = mySessionStorage.get('auth_token');
+  // 退出
   if (to.path == "/logout") {
-    // 退出
     mySessionStorage.remove("auth_token");
+    myLocalStorage.set("locking","0")
     next({
       name:LOGIN_PAGE_NAME
     })
   }
+
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
     next({
@@ -45,6 +48,10 @@ router.beforeEach((to, from, next) => {
     })
   } else {
     next();
+  }
+  // 锁屏
+  if (to.name != "locking"&&myLocalStorage.get('locking') == "1"){
+    next({name:'locking'})
   }
 })
 

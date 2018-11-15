@@ -33,6 +33,7 @@ import myLocalStorage from '@/model/myLocalStorage';
 import myAjax from '@/ajax/myAjax'
 import {api} from '@/api/api'
 import mySessionStorage from '@/model/mySessionStorage'
+import md5 from 'js-md5'
 export default {
     name: 'Unlock',
     data () {
@@ -60,25 +61,28 @@ export default {
             this.$refs.inputEle.focus();
         },
         handleUnlock () {
-            myAjax.get({
-                url: api.loginApi, //请求url
-                async:false,
-                data:{loginName:this.userInfo.logonName,password:hex_md5(this.password)},
-                success: (res) => {
-                  if (res.status == 200) {
-                    this.avatorLeft = '0px';
-                    this.inputLeft = '400px';
-                    this.password = '';
-                    this.$store.commit("setToken",res.data.token);
-                    mySessionStorage.set("token",res.data.token);
-                    myLocalStorage.set('locking', '0');
-                    this.$emit('on-unlock');
-                  }else{
-                    this.$Message.error('密码错误,请重新输入。');
-                    this.password = '';
-                  }
+            if (this.password == '') {
+                this.$Message.warning('密码不能为空~');
+            }else if (md5(this.password) != this.$store.state.password) {
+                // 密码错误
+                var loginCount = mySessionStorage.get("loginCount");
+                if (!loginCount) {
+                    loginCount = 1;
                 }
-            });
+                if (loginCount <= 5) {
+                    this.$Message.error('密码错误，还有'+(6-loginCount)+'次机会！');
+                    this.password = '';
+                    mySessionStorage.set("loginCount",loginCount+1);
+                }else{
+                    this.$router.push({path:'/logout'});
+                    mySessionStorage.remove("loginCount");
+                    myLocalStorage.set("locking","0");
+                }
+            }else{
+                mySessionStorage.remove("loginCount");
+                myLocalStorage.set("locking","0");
+                this.$router.push({name:myLocalStorage.get('last_page_name')});
+            }
         },
         unlockMousedown () {
             this.$refs.unlockBtn.className = 'unlock-btn click-unlock-btn';

@@ -73,6 +73,8 @@ export default {
 			this.$refs.loginForm.validate((valid) => {
               // 模拟登陆token
               if (valid) {
+              	var password = md5(this.form.password);
+              	this.$store.commit("setPassword",password);
               	$.ajax({
                       url: api.loginApi, //请求url
                       async: false,
@@ -80,7 +82,7 @@ export default {
                       timeout:10000,
                       data: {
                       	loginName: this.form.userName,
-                      	password: md5(this.form.password)
+                      	password: password
                       },
                       success: res => {
                       	if (res.status == 200) {
@@ -104,6 +106,7 @@ export default {
                           this.form.logMsg = "服务器未响应，请稍后再登陆。";
                           this.$Spin.hide();
                           // 演示环境跳转至主页
+                          myLocalStorage.set('locking', '0');
                           mySessionStorage.set('auth_token',"11111");
                           this.$router.push({path:'index'})
                       }
