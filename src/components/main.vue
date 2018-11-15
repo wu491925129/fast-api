@@ -59,6 +59,26 @@
     .lock-screen-btn-con {
         cursor: pointer;
     }
+    .m-l-10{
+        margin-left: 10px
+    }
+    .p-0{
+        padding: 0px;
+    }
+    .p-10{
+        padding: 0 10px;
+    }
+    .img-div{
+        width: 18px;
+        height: 15px;
+        display: inline-block;
+        line-height: 20px;
+        margin-left: 5px;
+    }
+    .gold-img{
+        width: 100%;
+        height: 100%;
+    }
 </style>
 <template>
     <div style="height:100%">
@@ -92,10 +112,23 @@
                                 {{item.name}}
                             </MenuItem>
                         </Submenu>
-                        <MenuItem name="6">
+                        <MenuItem name="6" class="p-0">
                             <lockScreen></lockScreen>
                         </MenuItem>
-                        
+                        <Submenu name="7">
+                            <template slot="title">
+                                <Avatar src="static/user.jpg" />
+                            </template>
+                            <!-- click.native 普通的click监听不生效，
+                                故使用click.native监听原生点击事件 -->
+                            <MenuItem 
+                                v-for="(item,index) in userInfo" 
+                                :key="index" 
+                                :name="'5-'+index"
+                                @click.native="getUser(item.url)">
+                                {{item.name}}
+                            </MenuItem>
+                        </Submenu>
                     </div>
                 </Menu>
             </Header>
@@ -146,6 +179,10 @@
                     {name:'繁体中文',code:'hk'},
                     {name:'English',code:'en'},
                     {name:'日本語',code:'jp'}
+                ],
+                userInfo:[
+                    {name:'个人中心',url:'user'},
+                    {name:'退出',url:'/logout'}
                 ],
                 navList:[],
                 sliderList:[]
@@ -202,6 +239,9 @@
                     }
                 });
             },
+            getUser(url){
+                this.$router.push({path:url})
+            }
         }
     }
 </script>

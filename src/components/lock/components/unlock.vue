@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="unlock-locking-tip-con text-center">用户{{userInfo.displayName}}已锁定</div>
+            <div class="unlock-locking-tip-con text-center">用户已锁定</div>
         </div>
     </transition>
 </template>
