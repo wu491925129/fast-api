@@ -152,11 +152,6 @@
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
                 </Header>
                 <Content :style="{margin: '20px', background: '#fff', height:'100%'}">
-                    <!-- {{$t("navList")[0]}}
-                    <Button type="primary" shape="circle" icon="ios-search"></Button>
-                    <Button type="primary" icon="ios-search">{{$t("searchBtn")}}</Button>
-                    <Button type="primary" shape="circle" icon="ios-search">{{$t("searchBtn")}}</Button>
-                    <Button type="primary" shape="circle">{{$t("searchBtn")}}</Button> -->
                     <router-view></router-view>
                 </Content>
             </Layout>

@@ -33,5 +33,19 @@ module.exports = {
         clickRate:"クリック量",
         fileAdd:"新規ファイル",
         shareCount:"統計を分ける"
+    },
+    userCenter:{
+        urlName:"個人の中心",
+        level1:"新米",
+        level2:"小学生",
+        level3:"中学生",
+        level4:"高校生",
+        level5:"大学",
+        level6:"研究生",
+        level7:"博士",
+        myDoc:"私のドキュメント",
+        myCollect:"私のコレクション",
+        uploadFile:"ファイルをアップロードする",
+        gold:"金貨"
     }
 }

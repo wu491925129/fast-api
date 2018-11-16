@@ -1,0 +1,22 @@
+{
+	"userInfo":{
+		"userId":"1",
+		"userName":"admin",
+		"displayName":"伍龙",
+		"gold":2000,
+		"myLevel":100,
+		"online":1,
+		"disabled":0,
+		"email":"491925129@qq.com",
+		"mobile":"18086526257",
+		"loginAt":"2018-11-16 12:00:00",
+		"loginIp":"127.0.0.1",
+		"likeTag":"漫画,杂志,摄影,星座运势,军事",
+		"loginCount":123,
+		"loginTheme":"theme2.css",
+		"avatarUrl":"static/user.jpg",
+		"opBy":"admin",
+		"opAt":"2018-11-15 09:00:00",
+		"delFlag":0
+	}
+}

@@ -31,27 +31,19 @@ router.beforeEach((to, from, next) => {
     next({
       name:LOGIN_PAGE_NAME
     })
-  }
-
-  if (!token && to.name !== LOGIN_PAGE_NAME) {
-    // 未登录且要跳转的页面不是登录页
-    next({
-      name: LOGIN_PAGE_NAME // 跳转到登录页
-    })
-  } else if (!token && to.name === LOGIN_PAGE_NAME) {
-    // 未登陆且要跳转的页面是登录页
-    next() // 跳转
-  } else if (token && to.name === LOGIN_PAGE_NAME) {
-    // 已登录且要跳转的页面是登录页
-    next({
-      name: 'main' // 跳转到homeName页
-    })
-  } else {
-    next();
-  }
-  // 锁屏
-  if (to.name != "locking"&&myLocalStorage.get('locking') == "1"){
+  }else if(to.name != "locking"&&myLocalStorage.get('locking') == "1"){
+    // 锁屏
     next({name:'locking'})
+  }else{
+    if (!token && to.name != LOGIN_PAGE_NAME) {
+      // 没有token
+      myLocalStorage.set("locking","0")
+      next({
+        name:LOGIN_PAGE_NAME
+      })
+    }else{
+      next();
+    }
   }
 })
 

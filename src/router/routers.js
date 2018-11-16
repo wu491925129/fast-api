@@ -15,6 +15,7 @@ export default [
       component:resolve=>require(['@/components/main.vue'],resolve),
       children:[
         {
+          //  首页
           path: '/index',
           name: 'index',
           meta: {
@@ -24,6 +25,7 @@ export default [
           component:resolve=>require(['@/components/index/index.vue'],resolve)
         },
         {
+          // 文件展示
           path: '/file/read',
           name: 'readFile',
           meta: {
@@ -31,7 +33,17 @@ export default [
           },
            // 懒加载
           component:resolve=>require(['@/components/file/readFile.vue'],resolve)
-        }
+        },
+        {
+          // 用户中心
+          path: '/user',
+          name: 'user',
+          meta: {
+              requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+          },
+           // 懒加载
+          component:resolve=>require(['@/components/user/user.vue'],resolve)
+        },
       ]
     },
     {
@@ -51,5 +63,10 @@ export default [
       },
       // 懒加载
       component:resolve=>require(['@/components/login.vue'],resolve)
+    },
+    /* 404页面 */
+    {
+        path:'*',
+        component:resolve=>require(['@/components/error/404'],resolve)
     }
   ]

@@ -6,7 +6,7 @@ module.exports = {
     /* 侧边导航 */
     sliderList:[
         {
-            name:"菜单1",
+            name:"首页",
             child:{
                 name:"子选项1"
             }
@@ -41,5 +41,21 @@ module.exports = {
         fileAdd:"新增文件",
         shareCount:"分享统计"
 
+    },
+
+    /* 个人中心 */
+    userCenter:{
+        urlName:"个人中心",
+        level1:"新手",
+        level2:"小学",
+        level3:"初中",
+        level4:"高中",
+        level5:"大学",
+        level6:"研究生",
+        level7:"博士",
+        myDoc:"我的文档",
+        myCollect:"我的收藏",
+        uploadFile:"上传文档",
+        gold:"金币"
     }
 }

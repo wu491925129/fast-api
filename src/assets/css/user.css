@@ -1,0 +1,42 @@
+.user-img{
+    border-radius:100%;
+    margin-left: 10%;
+    width: 80%;
+    height: 80%;
+    cursor: pointer;
+}
+.user-name{
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 550;
+    cursor: pointer;
+}
+.user_crumb {
+    height: 50px;
+}
+.user_crumb ul {
+    padding: 5px 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.user_crumb ul li {
+    border-right: 1px solid #dadada;
+    height: 40px;
+    display: table-cell;
+    text-align: center;
+    *float: left;
+    *width: 98px;
+}
+.user_crumb ul li.last {
+    border: none;
+}
+.user_crumb a{
+    color: #524e4e
+}
+.p-20{
+    padding:20px;
+}
+.m-20{
+    margin:20px;
+}

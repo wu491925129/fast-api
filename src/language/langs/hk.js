@@ -33,5 +33,19 @@ module.exports = {
         clickRate:"點擊量",
         fileAdd:"新增檔案",
         shareCount:"分享統計"
+    },
+    userCenter:{
+        urlName:"個人中心",
+        level1:"新手",
+        level2:"小學",
+        level3:"國中",
+        level4:"高中",
+        level5:"大學",
+        level6:"研究生",
+        level7:"博士",
+        myDoc:"我的文件",
+        myCollect:"我的收藏",
+        uploadFile:"上傳檔案",
+        gold:"金幣"
     }
 }
