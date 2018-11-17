@@ -7,7 +7,7 @@
             <BreadcrumbItem to="/index">{{$t('sliderList')[0].name}}</BreadcrumbItem>
             <BreadcrumbItem>{{$t('userCenter').urlName}}</BreadcrumbItem>
         </Breadcrumb>
-        <Col :xs="24" :sm="12" :md="10">
+        <Col :xs="24" :sm="12" :md="7">
             <Card class="m-20">
                 <Row :gutter="16">
                     <Col span="12">
@@ -24,6 +24,8 @@
                             <Icon type="ios-medal" size="16"/>
                             {{userInfo.myLevel | level}}
                         </Tag>
+                    </Col>
+                    <Col span="24">
                         <div>
                             兴趣标签：<br>
                             <Tag v-if="userInfo.likeTag != ''" 
@@ -66,7 +68,34 @@
                 </div>
             </Card>
         </Col>
-        
+
+        <Drawer
+            :title="$t('userCenter').tagDrawer"
+            v-model="tagDrawer"
+            width="30%"
+            closable 
+            class="tag-drawer">
+            {{tagList}}
+            <Row>
+                <Col v-for="(item,index) in $t('userCenter').tagList" :key="index">
+                    <h2>
+                        <Icon type="ios-pricetag" />
+                        <span class="title">{{item.name}}&nbsp;&nbsp;</span>
+                    </h2>
+                    <CheckboxGroup v-model="tagList">
+                        <Checkbox size="large" 
+                                  v-for="(tag,index1) in item.list" 
+                                  :label="tag"
+                                  :key="index1">
+                        </Checkbox>
+                    </CheckboxGroup>
+                </Col>
+            </Row>
+            <div class="tag-drawer-footer">
+                <Button style="margin-right: 8px" @click="tagDrawer = false">{{$t('cancel')}}</Button>
+                <Button type="primary" @click="updateTags">{{$t('submit')}}</Button>
+            </div>
+        </Drawer>  
     </Row>
 </template>
 <script>
@@ -85,7 +114,7 @@
                     "disabled":0,
                     "email":"491925129@qq.com",
                     "mobile":"18086526257",
-                    "likeTag":"漫画,杂志,摄影,星座运势,军事",
+                    "likeTag":"小学学案,高中教育,初中教育,英语听力,英语写作",
                     "loginAt":"2018-11-16 12:00:00",
                     "loginIp":"127.0.0.1",
                     "loginCount":123,
@@ -94,7 +123,9 @@
                     "opBy":"admin",
                     "opAt":"2018-11-15 09:00:00",
                     "delFlag":0
-                }
+                },
+                tagDrawer:false,
+                tagList:[]
             }
         },
         filters:{
@@ -123,16 +154,22 @@
             }
         },
         mounted(){
+            this.tagList = this.userInfo.likeTag.split(',');
         },
         methods: {
             delTag(tag,index){
                 var tagList = this.userInfo.likeTag.split(',');
                 tagList.splice(index, 1);
                 this.userInfo.likeTag = tagList.join(',');
-                console.log(this.userInfo.likeTag)
+                this.tagList = this.userInfo.likeTag.split(',')
             },
             tagAdd(){
                 // 添加标签
+                this.tagDrawer = true;
+            },
+            updateTags(){
+                this.userInfo.likeTag = this.tagList.join(',');
+                this.tagDrawer = false;
             }
         }
     }

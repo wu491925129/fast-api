@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 .user-name{
-    margin-top: 10px;
+    margin-top: 40px;
     font-size: 20px;
     font-weight: 550;
     cursor: pointer;
@@ -39,4 +39,20 @@
 }
 .m-20{
     margin:20px;
+}
+.tag-drawer h2{
+    margin:10px 0;
+    display: inline-block;
+    border-bottom:4px solid #5c6370;
+    font-size: 18px;
+}
+ .tag-drawer-footer{
+    margin-top:20px; 
+    width: 100%;
+    position: absolute;
+    left: 0;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 16px;
+    text-align: right;
+    background: #fff;
 }
