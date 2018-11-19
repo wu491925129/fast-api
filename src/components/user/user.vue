@@ -7,7 +7,7 @@
             <BreadcrumbItem to="/index">{{$t('sliderList')[0].name}}</BreadcrumbItem>
             <BreadcrumbItem>{{$t('userCenter').urlName}}</BreadcrumbItem>
         </Breadcrumb>
-        <Col :xs="24" :sm="12" :md="7">
+        <Col :xs="24" :sm="12" :md="8">
             <Card class="m-20">
                 <Row :gutter="16">
                     <Col span="12">
@@ -114,7 +114,7 @@
                     "disabled":0,
                     "email":"491925129@qq.com",
                     "mobile":"18086526257",
-                    "likeTag":"小学学案,高中教育,初中教育,英语听力,英语写作",
+                    "likeTag":"",
                     "loginAt":"2018-11-16 12:00:00",
                     "loginIp":"127.0.0.1",
                     "loginCount":123,
@@ -154,14 +154,18 @@
             }
         },
         mounted(){
-            this.tagList = this.userInfo.likeTag.split(',');
+            if(this.userInfo.likeTag != "" && this.userInfo.likeTag != null){
+                this.tagList = this.userInfo.likeTag.split(',');
+            }
         },
         methods: {
             delTag(tag,index){
                 var tagList = this.userInfo.likeTag.split(',');
                 tagList.splice(index, 1);
                 this.userInfo.likeTag = tagList.join(',');
-                this.tagList = this.userInfo.likeTag.split(',')
+                if(this.userInfo.likeTag != "" && this.userInfo.likeTag != null){
+                    this.tagList = this.userInfo.likeTag.split(',')
+                }
             },
             tagAdd(){
                 // 添加标签

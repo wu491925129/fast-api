@@ -54,13 +54,133 @@ module.exports = {
         tagDrawer:"Add Labels",
         tagList:[
             {
-                name:"幼儿/小学教育",
-                list:["教育管理", "小学学案","小学教育","小学考试","爱心教育","小学课件","课外知识"]
-            
+                "name": "Children/Primary Education",
+                "list": [
+                    "education management",
+                    "Primary school case",
+                    "Primary education",
+                    "Primary school exam",
+                    "Love Education",
+                    "Primary School Courseware",
+                    "Extracurricular knowledge"
+                ]
             },
             {
-                name:"中学教育",
-                list:["高中教育","试题","初中教育","竞赛题","教学研究","中学学案","中学课件","职业教育","中考","高考英语","中学作文","体育理论与教学","高考","中学实验","音乐美术"]
+                "name": "Secondary education",
+                "list": [
+                    "High School Education",
+                    "Question",
+                    "Junior high school education",
+                    "competition question",
+                    "teaching research",
+                    "Secondary school case",
+                    "Secondary courseware",
+                    "vocational education",
+                    "High school entrance examination",
+                    "College English",
+                    "Secondary composition",
+                    "Sports Theory and Teaching",
+                    "College entrance examination",
+                    "Secondary experiment",
+                    "Music Art"
+                ]
+            },
+            {
+                "name": "higher education",
+                "list": [
+                    "Engineering",
+                    "Science",
+                    "history",
+                    "agricultural science",
+                    "Philosophy",
+                    "Exercises / Questions",
+                    "Science books",
+                    "University courseware",
+                    "Graduate courseware",
+                    "Ideological politics",
+                    "Professional Basic Textbook",
+                    "Biology",
+                    "Linguistics",
+                    "educational",
+                    "Calculus",
+                    "statistics",
+                    "Experimental Design"
+                ]
+            },
+            {
+                "name": "graduate exam",
+                "list": [
+                    "Comprehensive",
+                    "Counseling consultation",
+                    "Post-graduate politics",
+                    "Postgraduate Mathematics",
+                    "MBA/MPA",
+                    "professional class",
+                    "Postgraduate English",
+                    "Master of Law"
+                ]
+            },
+            {
+                "name": "foreign language learning",
+                "list": [
+                    "English writing",
+                    "English Listening",
+                    "spoken English",
+                    "Grammar",
+                    "English vocabulary",
+                    "translation basics",
+                    "English four or six",
+                    "English majors four or eight",
+                    "English Dictionary",
+                    "small language",
+                    "German learning",
+                    "English reading",
+                    "Russian learning",
+                    "English learning",
+                    "Korean learning",
+                    "Business English",
+                    "TOEFL",
+                    "IELTS/LSAT",
+                    "GRE",
+                    "GMAT",
+                    "Japanese learning",
+                    "French learning",
+                    "English foundation",
+                    "English reading"
+                ]
+            },
+            {
+                "name": "Qualification / Certification Exam",
+                "list":[
+                    "Civil Service Examination",
+                    "Professional exam",
+                    "Being a test",
+                    "Self-test",
+                    "Teacher Qualification Examination",
+                    "Judicial Examination",
+                    "Microsoft Certification",
+                    "Cisco Certification",
+                    "Certified Public Accountant",
+                    "National Translation Qualification Certification",
+                    "Physician / Pharmacist Qualification Examination",
+                    "Accounting title examination",
+                    "Customs Qualification Examination",
+                    "Human Resource Manager",
+                    "Safety Engineer Exam",
+                    "Going abroad training",
+                    "Asset Appraisers Examination",
+                    "Technical occupational skills test",
+                    "Banking Qualifications",
+                    "Computer Rank Examination",
+                    "Nutrition Certified",
+                    "Logistician exam",
+                    "Securities Practitioner Qualification Examination",
+                    "Registered Tax Agent",
+                    "Financial Planner",
+                    "Architect exam",
+                    "Quality Management System Certification",
+                    "Builder Examination"
+                ]
             }
         ]
     }
