@@ -50,6 +50,9 @@ module.exports = {
         uploadFile:"ファイルをアップロードする",
         gold:"金貨",
         tagDrawer:"ラベルを追加",
+        subLabel:"興味ラベル",
+        level:"等級",
+        addLabel:"ラベルを追加",
         tagList:[
             {
                 "name":"子供/初等教育",

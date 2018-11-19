@@ -10,6 +10,7 @@
         <Col :xs="24" :sm="12" :md="8">
             <Card class="m-20">
                 <Row :gutter="16">
+                    <!-- 用户头像 用户名 等级 -->
                     <Col span="12">
                         <Badge :count="1">
                             <img class="user-img" src="static/user.jpg">
@@ -19,15 +20,17 @@
                         <div class="user-name" :title="userInfo.displayName">
                             {{userInfo.displayName | ellipsis}}
                         </div>
-                        等级：
+                        {{$t("userCenter").level}}：
                         <Tag color="red">
                             <Icon type="ios-medal" size="16"/>
                             {{userInfo.myLevel | level}}
                         </Tag>
                     </Col>
+
+                    <!-- 添加标签 -->
                     <Col span="24">
                         <div>
-                            兴趣标签：<br>
+                            {{$t('userCenter').subLabel}}：<br>
                             <Tag v-if="userInfo.likeTag != ''" 
                                  color="primary" 
                                  closable 
@@ -37,10 +40,13 @@
                                 <Icon type="ios-pricetags-outline" /> 
                                 {{tag}}
                             </Tag>
-                            <Button icon="ios-add" type="dashed" size="small" @click="tagAdd">添加标签</Button>
+                            <Button icon="ios-add" type="dashed" size="small" @click="tagAdd">
+                                {{$t("userCenter").addLabel}}
+                            </Button>
                         </div>
                     </Col>
                 </Row>
+                <!-- 我的文档 我的收藏 上传文档 -->
                 <div style="text-align:center">
                     <div class="user_crumb">
                         <ul>
@@ -69,6 +75,7 @@
             </Card>
         </Col>
 
+        <!-- 侧边弹框 添加标签 -->
         <Drawer
             :title="$t('userCenter').tagDrawer"
             v-model="tagDrawer"
@@ -85,7 +92,7 @@
                     <CheckboxGroup v-model="tagList">
                         <Checkbox size="large" 
                                   v-for="(tag,index1) in item.list" 
-                                  :label="tag"
+                                  :label="$t('userCenter').tagList[index].list[index1]"
                                   :key="index1">
                         </Checkbox>
                     </CheckboxGroup>

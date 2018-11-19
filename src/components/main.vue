@@ -170,10 +170,10 @@
                 isCollapsed: false,
                 language:"选择语言",
                 langs:[
-                    {name:'简体中文',code:'zh'},
-                    {name:'繁体中文',code:'hk'},
-                    {name:'English',code:'en'},
-                    {name:'日本語',code:'jp'}
+                    {name:'简体中文',code:"zh"},
+                    {name:'繁体中文',code:"hk"},
+                    {name:'English',code:"en"},
+                    {name:'日本語',code:"jp"}
                 ],
                 userInfo:[
                     {name:'个人中心',url:'user'},
@@ -224,7 +224,7 @@
             changeLanguage(code){
                 this.$i18n.locale = code;
                 this.getLanguageByCode(code);
-                myLocalStorage.set('language',code);
+                localStorage.setItem('language',code)
             },
             getLanguageByCode(code){
                 // 根据语言代码获取语言名称

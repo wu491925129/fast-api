@@ -52,6 +52,9 @@ module.exports = {
         uploadFile:"Upload File",
         gold:"gold",
         tagDrawer:"Add Labels",
+        subLabel:"Interest Label",
+        level:"Level",
+        addLabel:"Add Label",
         tagList:[
             {
                 "name": "Children/Primary Education",

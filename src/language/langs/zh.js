@@ -62,6 +62,9 @@ module.exports = {
         uploadFile:"上传文档",
         gold:"金币",
         tagDrawer:"添加标签",
+        subLabel:"兴趣标签",
+        level:"等级",
+        addLabel:"添加标签",
         tagList:[
             {
                 name:"幼儿/小学教育",

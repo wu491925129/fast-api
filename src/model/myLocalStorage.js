@@ -19,7 +19,7 @@ var myLocalStorage = {
     },
     remove(key){
         localStorage.removeItem(key);
-    }
+    },
 }
 
 // 将模块暴露出去

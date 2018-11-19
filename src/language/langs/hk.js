@@ -50,6 +50,9 @@ module.exports = {
         uploadFile:"上傳檔案",
         gold:"金幣",
         tagDrawer:"添加標籤",
+        subLabel:"興趣標籤",
+        level:"等級",
+        addLabel:"添加標籤",
         tagList:[
             {
                 "name": "幼兒/小學教育",
