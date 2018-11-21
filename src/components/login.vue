@@ -23,7 +23,14 @@
 							</Input>
 						</FormItem>
 						<FormItem>
-							<Button @click="handleSubmit" type="primary" long>登录</Button>
+							<Row :gutter="8">
+								<Col span="12">
+									<Button @click="handleSubmit" type="primary" long>登录</Button>
+								</Col>
+	        					<Col span="12">
+	        						<Button @click="registDrawer = true" type="primary" long>注册</Button>
+	        					</Col>
+							</Row>
 						</FormItem>
 					</Form>
 					<p class="login-link" align="center">
@@ -33,6 +40,32 @@
 				</div>
 			</Card>
 		</div>
+		<Drawer title="用户注册" 
+			    :closable="false" 
+			    v-model="registDrawer"
+			    placement="left"
+			    width="30">
+	        <Form ref="registForm" :model="registForm" :rules="rules">
+				<FormItem label="用户名" prop="userName">
+		            <Input v-model="registForm.userName" placeholder="请输入您要注册的用户名">
+		            	<Icon type="ios-person-outline" slot="prepend"></Icon>
+		            </Input>
+		        </FormItem>
+		        <FormItem label="密码" prop="password">
+		            <Input type="password" v-model="registForm.password" placeholder="请输入您的密码">
+		            	<Icon type="ios-lock-outline" slot="prepend"></Icon>
+		            </Input>
+		        </FormItem>
+		        <FormItem label="邮箱" prop="email">
+		            <AutoComplete
+				        v-model="registForm.email"
+				        @on-search="emailTips"
+				        placeholder="请输入您的邮箱">
+				        <Option v-for="(item,index) in data2" :value="item" :key="index">{{ item }}</Option>
+				    </AutoComplete>
+		        </FormItem>
+			</Form>
+	    </Drawer>
 	</div>
 </template>
 <script>
@@ -60,14 +93,33 @@ export default {
 					required: true,
 					message: '密码不能为空',
 					trigger: 'blur'
-				}]
-			}
+				}],
+				email:[
+					{ required: true, message: '邮箱不能为空', trigger: 'blur' },
+                    {type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+                ]
+			},
+			registDrawer:false,
+			registForm:{
+				userName:'',
+				password:'',
+				email:'111@qq.com'
+			},
+			data2: []
 		};
 	},
 	mounted() {
 		this.form.logMsg = this.$store.state.logMsg;
 	},
 	methods: {
+		// 邮箱提示
+		emailTips(value) {
+		    this.data2 = !value || value.indexOf('@') >= 0 ? [] : [
+		        value + '@qq.com',
+		        value + '@sina.com',
+		        value + '@163.com'
+		    ];
+		},
 		handleSubmit() {
 			this.$Spin.show();
 			this.$refs.loginForm.validate((valid) => {
