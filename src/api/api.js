@@ -6,10 +6,13 @@
 */
 
 /* 从配置url中获取相应的数据 */
-let baseUrl = "";
+let baseUrl = myConf.baseUrl;
 export const api = {
     /* 登陆验证Api */
     loginApi:baseUrl+'/login',
+
+    /* 注册 */
+    registApi:baseUrl+'/user/info/regist',
 
     /* 单点登录Api */
     ssoLoginApi:baseUrl+'/ssoLogin',

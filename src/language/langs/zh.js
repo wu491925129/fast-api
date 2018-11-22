@@ -3,6 +3,20 @@ module.exports = {
     /* 全局 */
     submit:"确定",
     cancel:"取消",
+
+    /* 登陆 */
+    loginPage:{
+        login:"登陆",
+        regist:"注册",
+        userName:"账号",
+        userNamePlaceholder:"请输入账号",
+        password:"密码",
+        passwordPlaceholder:"请输入密码",
+        email:"邮箱",
+        emailPlaceholder:"请输入邮箱",
+        notEmpty:"不能为空",
+        emailFormat:"邮箱格式不正确"
+    },
     
     /* 导航 */
     navList:["项目1","项目2","项目3","项目4"],

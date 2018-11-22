@@ -10,7 +10,7 @@ import mySessionStorage from '../model/mySessionStorage.js';
 
 var myAjax = {
     get(options){
-        let token = mySessionStorage.get("token")?mySessionStorage.get("token"):'';
+        let token = mySessionStorage.get("auth_token")?mySessionStorage.get("auth_token"):'';
         /**
          * 传入方式默认为对象
          * */
@@ -23,17 +23,16 @@ var myAjax = {
          * 默认为异步请求
          * */
         options.async = options.async?options.async:true;
-        if (options.data == undefined) {
-            options["data"] = {"token":token}
-        }else{
-            options.data["token"] = token;
-        }
+        
         $.ajax({
             url: options.url,   //请求url
             type: 'get',  //全部用POST
             async:options.async,
             data:options.data,
             dataType:options.dataType, // 返回值类型
+            beforeSend: function(request) {
+                request.setRequestHeader("auth_token", token);
+            },
             success:(res)=>{  // 成功
                 options.success(res);
             },
@@ -42,8 +41,8 @@ var myAjax = {
             }
         });
     },
-    getForm(options){
-        let token = mySessionStorage.get("token")?mySessionStorage.get("token"):'';
+    post(options){
+        let authToken = mySessionStorage.get("auth_token")?mySessionStorage.get("auth_token"):'';
         /**
          * 传入方式默认为对象
          * */
@@ -56,17 +55,16 @@ var myAjax = {
          * 默认为异步请求
          * */
         options.async = options.async?true:false;
-        if (options.data == undefined) {
-            options["data"] = {"token":token}
-        }else{
-            options.data += "&token="+token;
-        }
         $.ajax({
             url: options.url,   //请求url
             type: 'POST',  //全部用POST
             async:options.async,
             data:options.data,
+            contentType:'application/json;charset=utf-8',
             dataType:options.dataType, // 返回值类型
+            beforeSend: function(request) {
+                request.setRequestHeader("auth_token", authToken);
+            },
             success:(res)=>{  // 成功
                 options.success(res);
             },

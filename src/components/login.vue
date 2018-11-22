@@ -1,34 +1,46 @@
 <template>
 	<div class="login" @keydown.enter="handleSubmit">
+        <Select v-model="language" class="langSelect" @on-change="changeLang">
+	        <Option v-for="item in langs" :value="item.code" :key="item.name">
+	        	{{ item.name }}
+	        </Option>
+	    </Select>
 		<div class="login-con">
 			<Card :bordered="false">
 				<p slot="title">
 					<Icon type="log-in"></Icon>
-					欢迎登录
+					{{$t("loginPage").login}}
 				</p>
 				<div class="form-con">
 					<Form ref="loginForm" :model="form" :rules="rules">
 						<FormItem prop="userName">
-							<Input v-model="form.userName" placeholder="请输入用户名">
+							<Input v-model="form.userName"
+								   :placeholder="$t('loginPage').userNamePlaceholder">
 								<span slot="prepend">
-									<Icon :size="16" type="person"></Icon>
+								<Icon :size="16" type="ios-person-outline" slot="prepend"></Icon>
 								</span>
 							</Input>
 						</FormItem>
 						<FormItem prop="password">
-							<Input type="password" v-model="form.password" placeholder="请输入密码">
+							<Input type="password" 
+								   v-model="form.password" 
+								   :placeholder="$t('loginPage').passwordPlaceholder">
 								<span slot="prepend">
-									<Icon :size="14" type="locked"></Icon>
+									<Icon :size="16" type="ios-lock-outline" slot="prepend"></Icon>
 								</span>
 							</Input>
 						</FormItem>
 						<FormItem>
 							<Row :gutter="8">
 								<Col span="12">
-									<Button @click="handleSubmit" type="primary" long>登录</Button>
+									<Button @click="handleSubmit" type="primary" long>
+										{{$t("loginPage").login}}
+									</Button>
 								</Col>
 	        					<Col span="12">
-	        						<Button @click="registDrawer = true" type="primary" long>注册</Button>
+	        						<Button @click="registDrawer = true" type="primary" long>
+										{{$t("loginPage").regist}}
+	        						</Button>
 	        					</Col>
 							</Row>
 						</FormItem>
@@ -40,31 +52,39 @@
 				</div>
 			</Card>
 		</div>
-		<Drawer title="用户注册" 
+		<Drawer :title="$t('loginPage').regist" 
 			    :closable="false" 
 			    v-model="registDrawer"
 			    placement="left"
 			    width="30">
 	        <Form ref="registForm" :model="registForm" :rules="rules">
-				<FormItem label="用户名" prop="userName">
-		            <Input v-model="registForm.userName" placeholder="请输入您要注册的用户名">
-		            	<Icon type="ios-person-outline" slot="prepend"></Icon>
+				<FormItem :label="$t('loginPage').userName" prop="userName">
+		            <Input v-model="registForm.userName" 
+		            	   :placeholder="$t('loginPage').userNamePlaceholder"
+		            	   clearable>
+		            	<Icon :size="16" type="ios-person-outline" slot="prepend"></Icon>
 		            </Input>
 		        </FormItem>
-		        <FormItem label="密码" prop="password">
-		            <Input type="password" v-model="registForm.password" placeholder="请输入您的密码">
-		            	<Icon type="ios-lock-outline" slot="prepend"></Icon>
+		        <FormItem :label="$t('loginPage').password" prop="password">
+		            <Input type="password" 
+		                   v-model="registForm.password" 
+		                   :placeholder="$t('loginPage').passwordPlaceholder"
+		                   clearable>
+		            	<Icon :size="16" type="ios-lock-outline" slot="prepend"></Icon>
 		            </Input>
 		        </FormItem>
-		        <FormItem label="邮箱" prop="email">
-		            <AutoComplete
-				        v-model="registForm.email"
-				        @on-search="emailTips"
-				        placeholder="请输入您的邮箱">
-				        <Option v-for="(item,index) in data2" :value="item" :key="index">{{ item }}</Option>
-				    </AutoComplete>
+		        <FormItem :label="$t('loginPage').email" prop="email">
+		            <Input v-model="registForm.email" 
+		            	   :placeholder="$t('loginPage').emailPlaceholder"
+		            	   clearable>
+		            	<Icon :size="16" type="ios-mail-outline" slot="prepend"></Icon>
+		            </Input>
 		        </FormItem>
 			</Form>
+			<div class="regist-drawer-footer">
+                <Button style="margin-right: 8px" @click="registDrawer = false">{{$t('cancel')}}</Button>
+                <Button type="primary" @click="regist">{{$t('loginPage').regist}}</Button>
+            </div>
 	    </Drawer>
 	</div>
 </template>
@@ -83,35 +103,75 @@ export default {
 				password: '',
 				logMsg: this.$store.state.logMsg,
 			},
-			rules: {
+			langs:[
+                {name:'简体中文',code:"zh"},
+                {name:'繁体中文',code:"hk"},
+                {name:'English',code:"en"},
+                {name:'日本語',code:"jp"}
+            ],
+            language:'',
+			rules:{
 				userName: [{
 					required: true,
-					message: '账号不能为空',
+					message: this.$t("loginPage").userName + this.$t("loginPage").notEmpty,
 					trigger: 'blur'
 				}],
 				password: [{
 					required: true,
-					message: '密码不能为空',
+					message: this.$t("loginPage").password + this.$t("loginPage").notEmpty,
 					trigger: 'blur'
 				}],
 				email:[
-					{ required: true, message: '邮箱不能为空', trigger: 'blur' },
-                    {type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+					{
+						required: true,
+						message: this.$t("loginPage").email + this.$t("loginPage").notEmpty,
+						trigger: 'blur' 
+					},
+                    {
+                    	type: 'email', 
+                    	message: this.$t("loginPage").emailFormat, 
+                    	trigger: 'blur' 
+                    }
                 ]
 			},
 			registDrawer:false,
 			registForm:{
 				userName:'',
 				password:'',
-				email:'111@qq.com'
+				email:''
 			},
 			data2: []
 		};
 	},
+	computed:{
+		userNameComputed(){
+            // 计算属性使用闭包的方法缓解不能传参的尴尬
+            return (data) => {
+                return this.$t("loginPage").data;
+            }
+        },
+	},
 	mounted() {
 		this.form.logMsg = this.$store.state.logMsg;
+		// 初始化从store中拿数据
+        var code = myLocalStorage.get("language");
+        this.language = code;
+        this.$i18n.locale = code;
 	},
 	methods: {
+		changeLang(code){
+			this.$i18n.locale = code;
+            this.getLanguageByCode(code);
+            localStorage.setItem('language',code)
+		},
+		getLanguageByCode(code){
+            // 根据语言代码获取语言名称
+            this.langs.forEach((info,index) => {
+                if (info.code == code) {
+                    this.language = code;
+                }
+            });
+        },
 		// 邮箱提示
 		emailTips(value) {
 		    this.data2 = !value || value.indexOf('@') >= 0 ? [] : [
@@ -169,6 +229,21 @@ export default {
               }
           });
 		},
+		regist(){
+			// 注册
+			myAjax.post({
+				url:api.registApi,
+				data:JSON.stringify(this.registForm),
+				success:(res)=>{  // 成功
+                    if (res.code == 200) {
+                        console.log(res.data)
+                    }
+                },
+                fail:(err)=>{     // 失败
+                    console.log(err);
+                }
+			})
+		}
 	}
 };
 </script>
@@ -197,5 +272,21 @@ export default {
 	}
 	.login-link {
 		color: red;
+	}
+	.langSelect{
+		margin:20px;
+		width:85px;
+		float: right
+	}
+	.regist-drawer-footer{
+	    margin-top:20px; 
+	    width: 100%;
+	    position: absolute;
+	    left: 0;
+	    bottom: 0;
+	    border-top: 1px solid #e8e8e8;
+	    padding: 10px 16px;
+	    text-align: right;
+	    background: #fff;
 	}
 </style>

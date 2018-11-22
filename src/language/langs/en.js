@@ -2,6 +2,19 @@
 module.exports = {
     submit:"Submit",
     cancel:"Cancel",
+    /* 登陆 */
+    loginPage:{
+        login:"Login",
+        regist:"Regist",
+        userName:"UserName",
+        userNamePlaceholder:"Enter your name",
+        password:"Password",
+        passwordPlaceholder:"Enter your password",
+        email:"Email",
+        emailPlaceholder:"Enter your e-mail",
+        notEmpty:"Can't be empty",
+        emailFormat:"Incorrect email format"
+    },
     navList:["item1","item2","item3","item4"],
     sliderList:[
         {

@@ -2,6 +2,19 @@
 module.exports = {
     submit:"確定",
     cancel:"取消",
+    /* 登陆 */
+    loginPage:{
+        login:"登入",
+        regist:"注册",
+        userName:"帳號",
+        userNamePlaceholder:"請輸入帳號",
+        password:"密碼",
+        passwordPlaceholder:"請輸入密碼",
+        email:"郵箱",
+        emailPlaceholder:"請輸入郵箱",
+        notEmpty:"不能為空",
+        emailFormat:"郵箱格式不正確"
+    },
     navList:["項目1","項目2","項目3","項目4"],
     sliderList:[
         {

@@ -2,6 +2,18 @@
 module.exports = {
     submit:"確定する",
     cancel:"取り消す",
+    loginPage:{
+        login:"上陸する",
+        regist:"登録する",
+        userName:"アカウント",
+        userNamePlaceholder:"アカウントを入力してください",
+        password:"パスワード",
+        passwordPlaceholder:"パスワードを入力してください",
+        email:"郵便ポスト",
+        emailPlaceholder:"メールを入力してください",
+        notEmpty:"は空にできません",
+        emailFormat:"メールのフォーマットが正しくない"
+    },
     navList:["プロジェクト1","プロジェクト2","プロジェクト3","プロジェクト4"],
     sliderList:[
         {
