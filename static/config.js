@@ -7,5 +7,5 @@
 var hostName = window.location.hostname;
 var port = 8888;
 const myConf = {
-    baseUrl : 'http://10.2.100.22:'+port+'/fastWord',
+    baseUrl : 'http://10.2.100.207:'+port+'/fastWord',
 }

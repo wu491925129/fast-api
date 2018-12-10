@@ -230,19 +230,35 @@ export default {
           });
 		},
 		regist(){
-			// 注册
-			myAjax.post({
-				url:api.registApi,
-				data:JSON.stringify(this.registForm),
-				success:(res)=>{  // 成功
-                    if (res.code == 200) {
-                        console.log(res.data)
-                    }
-                },
-                fail:(err)=>{     // 失败
-                    console.log(err);
-                }
-			})
+			this.$Spin.show();
+			this.$refs.registForm.validate((valid) => {
+				 if (valid) {
+				 	var password = md5(this.form.password);
+              		this.$store.commit("setPassword",password);
+              		var registJson = this.registForm;
+              		registJson.password = password;
+              		// 注册
+					myAjax.post({
+						url:api.registApi,
+						data:JSON.stringify(registJson),
+						success:(res)=>{  // 成功
+		                    if (res.code == 200) {
+		                    	this.$Message.success('注册成功！');
+		                    }else{
+		                    	this.$Message.error('注册失败，'+res.message);
+		                    }
+		                },
+		                fail:(err)=>{     // 失败
+		                    console.log(err);
+		                }
+					})
+					this.$Spin.hide();
+				}else{
+					this.$Spin.hide();
+					this.$Message.error('用户名、密码、邮箱不能为空~');
+				}
+			});
+			
 		}
 	}
 };
