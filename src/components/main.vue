@@ -9,6 +9,11 @@
         top: 15px;
         left: 20px;
     }
+    .layout-logo img{
+        margin-bottom: 15px;
+        width: 100px;
+        height: 30px; 
+    }
     .layout-nav{
         float: right;
         margin: 0 auto;
@@ -85,7 +90,9 @@
         <Layout>
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
-                    <div class="layout-logo"></div>
+                    <div class="layout-logo">
+                        <img src="../assets/images/logo.png"> 
+                    </div>
                     <div class="layout-nav">
                         <!-- 选项 -->
                         <MenuItem 
