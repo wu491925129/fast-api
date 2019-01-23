@@ -26,7 +26,7 @@ export default [
         },
         {
           // 文件展示
-          path: '/file/read',
+          path: '/file',
           name: 'readFile',
           meta: {
               requireAuth: true // 添加该字段，表示进入这个路由是需要登录的

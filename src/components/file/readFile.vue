@@ -2,35 +2,13 @@
     <div class="read" style="background:#fff">
         <Row :gutter="5" class="p-b-20">
             <Col span="24">
-                <Col :xs="24" :sm="12" :md="6" class="p-10" @click.native="showDrawer('word')">
+                <Col :xs="24" :sm="12" :md="6" v-for="(info,index) in fileList" class="p-10" @click.native="showDrawer('word')">
                     <Card>
                         <div style="text-align:center">
-                            <img src="@/assets/images/word.png">
-                            <h3>测试word.docx</h3>
-                        </div>
-                    </Card>
-                </Col>
-                <Col :xs="24" :sm="12" :md="6" class="p-10" @click.native="showDrawer('excel')">
-                    <Card>
-                        <div style="text-align:center">
-                            <img src="@/assets/images/excel.png">
-                            <h3>测试excel.xlsx</h3>
-                        </div>
-                    </Card>
-                </Col>
-                <Col :xs="24" :sm="12" :md="6" class="p-10" @click.native="showDrawer('ppt')">
-                    <Card>
-                        <div style="text-align:center">
-                            <img src="@/assets/images/ppt.png">
-                            <h3>测试ppt.pptx</h3>
-                        </div>
-                    </Card>
-                </Col>
-                <Col :xs="24" :sm="12" :md="6" class="p-10" @click.native="showDrawer('word')">
-                    <Card>
-                        <div style="text-align:center">
-                            <img src="@/assets/images/word.png">
-                            <h3>测试word2.docx</h3>
+                            <img v-if="info.fileSuffix === 'docx'" src="@/assets/images/word.png">
+                            <img v-else-if="info.fileSuffix === 'xlsx' || info.fileSuffix === 'xls'" src="@/assets/images/excel.png">
+                            <img v-else-if="info.fileSuffix === 'pptx'" src="@/assets/images/ppt.png">
+                            <h3>{{info.fileName}}</h3>
                         </div>
                     </Card>
                 </Col>
@@ -50,18 +28,41 @@
 <script>
     import myAjax from '@/ajax/myAjax.js'
     import {api} from '@/api/api.js'
+    import mySessionStorage from '@/model/mySessionStorage'
     export default {
         data () {
             return {
                 drawer:false,
                 fileUrl:'',
-                timer: null
+                timer: null,
+                fileList:[],
             }
         },
+        // 计算属性
+        computed: {
+            
+        },
         mounted(){
+            this.getFileList();
             $("#WACRibbonPanel").remove();
         },
         methods:{
+            getFileList(){
+                var userId = mySessionStorage.get("userInfo").userId;
+                myAjax.get({
+                    url:api.getFileList,
+                    data:{userId:userId,page:1,size:10},
+                    success:(res)=>{  // 成功
+                        if (res.code == 200) {
+                            this.fileList = res.data.list
+                        }else{
+                        }
+                    },
+                    fail:(err)=>{     // 失败
+                        console.log(err);
+                    }
+                })
+            },
             showDrawer(el){
                 this.$Spin.show();
                 switch(el){

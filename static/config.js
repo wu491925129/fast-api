@@ -8,4 +8,5 @@ var hostName = window.location.hostname;
 var port = 8888;
 const myConf = {
     baseUrl : 'http://localhost:'+port+'/fastWord',
+    fileServer:'http://file.bseke.com/fastFile/file/',
 }

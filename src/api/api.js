@@ -7,6 +7,7 @@
 
 /* 从配置url中获取相应的数据 */
 let baseUrl = myConf.baseUrl;
+let fileServer = myConf.fileServer;
 export const api = {
     /* 登陆验证Api */
     loginApi:baseUrl+'/login',
@@ -16,6 +17,9 @@ export const api = {
 
     /* 单点登录Api */
     ssoLoginApi:baseUrl+'/ssoLogin',
+
+    /****************************************************/
+    /************************ 首页 **********************/
 
     /* 首页 */
     indexPageApi:'static/indexPage.json',
@@ -31,5 +35,16 @@ export const api = {
 
     /* 首页 - 获取分享列表 */
     shareCountApi:'static/shareCount.json',
+
+
+    /****************************************************/
+    /***************** file 文件显示页面******************/
+    /* 文件上传 */
+    uploadApi:fileServer+"upload",
+
+    downloadApi:fileServer+"download/",
+
+    getFileList:baseUrl+'/upload/info/list'
+
 
 }

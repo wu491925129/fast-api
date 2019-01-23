@@ -122,7 +122,10 @@
                         <MenuItem name="6" class="p-0">
                             <lockScreen></lockScreen>
                         </MenuItem>
-                        <Submenu name="7">
+                        <MenuItem name="7" class="p-0">
+                            <fileUpload></fileUpload>
+                        </MenuItem>
+                        <Submenu name="8">
                             <template slot="title">
                                 <Avatar src="static/user.jpg" />
                             </template>
@@ -168,9 +171,11 @@
 <script>
     import myLocalStorage from '@/model/myLocalStorage.js'
     import lockScreen from './lock/lockscreen.vue'
+    import fileUpload from './upload/fileUpload.vue'
     export default {
         components: {
             lockScreen,
+            fileUpload
         },
         data () {
             return {
