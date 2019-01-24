@@ -192,18 +192,22 @@ export default {
                       async: false,
                       dataType: "json",
                       timeout:10000,
+                      type:"POST",
                       data: {
-                      	loginName: this.form.userName,
+                      	userName: this.form.userName,
                       	password: password
                       },
                       success: res => {
-                      	if (res.status == 200) {
+                      	if (res.code == 200) {
                               // 登陆成功
-                              myLocalStorage.set("userInfo", res.data.userInfo);
-                              myLocalStorage.set("token", res.data.token);
-                              this.$store.commit("setToken", res.data.token);
+                              if(res.data.token){
+                              	myLocalStorage.set("auth_tokrn", res.data.auth_token);
+                                this.$store.commit("setToken", res.data.auth_token);
+                              }else{
+                              	mySessionStorage.set('auth_token',"11111");
+                              }
                               myLocalStorage.set('locking', '0');
-                              myLocalStorage.set('userInfo', res.data.userInfo);
+                              mySessionStorage.set('userInfo', res.data.userInfo);
                               this.$router.push({
                               	path: 'index'
                               });
@@ -211,6 +215,13 @@ export default {
                           } else {
                           	this.form.logMsg = res.msg;
                           	this.$Spin.hide();
+                          	// 失败
+	                          this.form.logMsg = "服务器未响应，请稍后再登陆。";
+	                          this.$Spin.hide();
+	                          // 演示环境跳转至主页
+	                          myLocalStorage.set('locking', '0');
+	                          mySessionStorage.set('auth_token',"11111");
+	                          this.$router.push({path:'index'})
                           }
                       },
                       error: (err) => {

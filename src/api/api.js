@@ -44,7 +44,9 @@ export const api = {
 
     downloadApi:fileServer+"download/",
 
-    getFileList:baseUrl+'/upload/info/list'
+    getFileList:baseUrl+'/upload/info/list',
+
+    uploadStatusApi:baseUrl+'/upload/info/add'
 
 
 }

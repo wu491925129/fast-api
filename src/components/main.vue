@@ -123,7 +123,7 @@
                             <lockScreen></lockScreen>
                         </MenuItem>
                         <MenuItem name="7" class="p-0">
-                            <fileUpload></fileUpload>
+                            <fileUpload @uploadStatus="upload"></fileUpload>
                         </MenuItem>
                         <Submenu name="8">
                             <template slot="title">
@@ -162,7 +162,7 @@
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
                 </Header>
                 <Content :style="{margin: '20px', background: '#fff', height:'100%'}">
-                    <router-view></router-view>
+                    <router-view ref="fileView"></router-view>
                 </Content>
             </Layout>
         </Layout>
@@ -248,6 +248,13 @@
             },
             getUser(url){
                 this.$router.push({path:url})
+            },
+            /* 子组件fileUpload方法 */
+            upload(status){
+                // 获取到子组件文件上传成功的状态，通知子路由刷新页面
+                if (status == 'success') {
+                    this.$refs.fileView.getFileList();
+                }
             }
         }
     }

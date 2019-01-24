@@ -2,20 +2,28 @@
     <div class="read" style="background:#fff">
         <Row :gutter="5" class="p-b-20">
             <Col span="24">
-                <Col :xs="24" :sm="12" :md="6" v-for="(info,index) in fileList" class="p-10" @click.native="showDrawer('word')">
+                <Col :xs="24" :sm="12" :md="6" 
+                     v-for="(info,index) in fileList" 
+                     :key="index"
+                     class="p-10" 
+                     @click.native="showDrawer(info.fileId)">
                     <Card>
                         <div style="text-align:center">
                             <img v-if="info.fileSuffix === 'docx'" src="@/assets/images/word.png">
                             <img v-else-if="info.fileSuffix === 'xlsx' || info.fileSuffix === 'xls'" src="@/assets/images/excel.png">
                             <img v-else-if="info.fileSuffix === 'pptx'" src="@/assets/images/ppt.png">
-                            <h3>{{info.fileName}}</h3>
+                            <img v-else src="@/assets/images/default.png">
+                            <Row>
+                                <Tooltip max-width="200" :content="info.fileName" placement="top">
+                                    <h3>{{formatFileName(info.fileName)}}</h3>
+                                </Tooltip>
+                            </Row>
                         </div>
                     </Card>
                 </Col>
             </Col>
         </Row>
-        <Drawer title="Basic Drawer" 
-                placement="right" 
+        <Drawer placement="right" 
                 :closable="true" 
                 v-model="drawer"
                 width="90"
@@ -40,7 +48,15 @@
         },
         // 计算属性
         computed: {
-            
+            formatFileName(){
+                return (fileName) => {
+                    if (fileName.length > 14) {
+                        return fileName.substr(0,13)+'...';
+                    }else{
+                        return fileName;
+                    }
+                }
+            }
         },
         mounted(){
             this.getFileList();
@@ -63,19 +79,9 @@
                     }
                 })
             },
-            showDrawer(el){
+            showDrawer(fileId){
                 this.$Spin.show();
-                switch(el){
-                    case 'word':
-                        this.fileUrl = 'http://view.officeapps.live.com/op/view.aspx?src=newteach.pbworks.com%2Ff%2Fele%2Bnewsletter.docx';
-                        break;
-                    case 'excel':
-                        this.fileUrl = 'http://view.officeapps.live.com/op/view.aspx?src=http%3A%2F%2Flearn.bankofamerica.com%2Fcontent%2Fexcel%2FWedding_Budget_Planner_Spreadsheet.xlsx'
-                        break;
-                    case 'ppt':
-                        this.fileUrl = 'http://view.officeapps.live.com/op/view.aspx?src=http%3a%2f%2fvideo.ch9.ms%2fbuild%2f2011%2fslides%2fTOOL-532T_Sutter.pptx';
-                        break;
-                }
+                this.fileUrl = 'http://view.officeapps.live.com/op/view.aspx?src='+api.downloadApi+fileId;
                 this.drawer = true;
             },
             removeEl(){
