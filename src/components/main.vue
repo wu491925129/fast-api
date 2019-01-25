@@ -127,7 +127,7 @@
                         </MenuItem>
                         <Submenu name="8">
                             <template slot="title">
-                                <Avatar src="static/user.jpg" />
+                                <Avatar :src="storeUserInfo.avatarUrl+'/thumb'" />
                             </template>
                             <!-- click.native 普通的click监听不生效，
                                 故使用click.native监听原生点击事件 -->
@@ -192,7 +192,8 @@
                     {name:'退出',url:'/logout'}
                 ],
                 navList:[],
-                sliderList:[]
+                sliderList:[],
+                info:{}
             }
         },
         // 计算属性
@@ -219,11 +220,21 @@
                 return (index) => {
                     return this.$t("sliderList")[index].name;
                 }
+            },
+            // vuex 双向数据绑定
+            storeUserInfo: {
+               set (value) {
+                  this.$store.commit('setUserInfo',value)
+               },
+               get(){
+                   return this.$store.state.userInfo;
+               }
             }
         },
         mounted(){
             // 初始化从store中拿数据
             var code = myLocalStorage.get("language");
+            this.info = this.storeUserInfo;
             this.getLanguageByCode(code);
             this.$i18n.locale = code;
             this.navList = this.$store.state.navList;

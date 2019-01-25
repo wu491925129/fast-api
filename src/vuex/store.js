@@ -17,6 +17,7 @@ const state = {
     isLogin:true,
     logMsg:'',
     password:'',
+    userInfo:{},
     navList:[
         {
             'text':'',
@@ -109,6 +110,9 @@ const state = {
 }
 
 const mutations = {
+    setUserInfo(state,userInfo){
+        state.userInfo = userInfo;
+    },
     setToken(state,token){
         state.token = token;
     },

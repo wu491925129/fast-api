@@ -1,8 +1,7 @@
 .user-img{
     border-radius:100%;
-    margin-left: 10%;
-    width: 80%;
-    height: 80%;
+    width: 130px;
+    height: 130px;
     cursor: pointer;
 }
 .user-name{
@@ -55,4 +54,31 @@
     padding: 10px 16px;
     text-align: right;
     background: #fff;
+}
+
+.demo-upload-list-cover{
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.5);
+}
+.img-item:hover .demo-upload-list-cover{
+    display: block;
+}
+.demo-upload-list-cover i{
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    margin: 0 2px;
+}
+.demo-upload-list-cover > .icon-group{
+    position: absolute;
+    top:50%;
+    left:50%;
+    width:100%;
+    transform:translate(-50%,-50%);
+    text-align: center;
 }

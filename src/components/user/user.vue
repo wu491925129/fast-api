@@ -11,13 +11,43 @@
             <Card class="m-20">
                 <Row :gutter="16">
                     <!-- 用户头像 用户名 等级 -->
-                    <Col span="12">
+                    <Col span="12" class="img-item">
                         <Badge :count="1">
-                            <img class="user-img" src="static/user.jpg">
+                            <img v-if="storeUserInfo.avatarUrl != ''" class="user-img" :src="storeUserInfo.avatarUrl+'/thumb'">
+                            <img v-else class="user-img" src="static/user.jpg">
+                            <Spin size="large" fix v-if="spinShow"></Spin>
+                            <div class="demo-upload-list-cover">
+                                <div class="icon-group">
+                                    <Icon type="ios-eye-outline" @click.native="handleView()"></Icon>
+                                    <Upload
+                                        ref="upload"
+                                        :show-upload-list="false"
+                                        :on-success="handleSuccess"
+                                        :format="['jpg','jpeg','png']"
+                                        :on-format-error="handleFormatError"
+                                        :before-upload="handleBeforeUpload"
+                                        multiple
+                                        :action="uploadAction"
+                                        style="display: inline-block;">
+                                        <div>
+                                            <Icon type="ios-camera-outline" size="25"></Icon>
+                                        </div>
+                                    </Upload>
+                                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+                                </div>
+                            </div>
+                            
                         </Badge>
                     </Col>
                     <Col span="12">
-                        <div class="user-name" :title="userInfo.displayName">
+                        <div class="user-name" 
+                             :title="userInfo.userName"
+                             v-if="userInfo.displayName == null||userInfo.displayName == ''">
+                            {{userInfo.userName | ellipsis}}
+                        </div>
+                        <div class="user-name" 
+                             :title="userInfo.displayName"
+                             v-else>
                             {{userInfo.displayName | ellipsis}}
                         </div>
                         {{$t("userCenter").level}}：
@@ -31,7 +61,8 @@
                     <Col span="24">
                         <div>
                             {{$t('userCenter').subLabel}}：<br>
-                            <Tag v-if="userInfo.likeTag != ''" 
+                            <Tag v-if="userInfo.likeTag == null||userInfo.likeTag==''"></Tag>
+                            <Tag v-else
                                  color="primary" 
                                  closable 
                                  v-for="(tag,index) in (userInfo.likeTag).split(',')"
@@ -102,48 +133,51 @@
                 <Button style="margin-right: 8px" @click="tagDrawer = false">{{$t('cancel')}}</Button>
                 <Button type="primary" @click="updateTags">{{$t('submit')}}</Button>
             </div>
-        </Drawer>  
+        </Drawer>
+        <Modal title="头像详情" v-model="visible">
+            <img :src="storeUserInfo.avatarUrl" v-if="visible" style="width: 100%">
+        </Modal>  
     </Row>
 </template>
 <script>
     import myLocalStorage from '@/model/myLocalStorage.js'
+    import mySessionStorage from '@/model/mySessionStorage'
     import i18n from '@/language/i18n'
+    import {api} from '@/api/api'
+    import myAjax from '@/ajax/myAjax'
     export default {
         data () {
             return {
-                userInfo:{
-                    "userId":"1",
-                    "userName":"admin",
-                    "displayName":"贝瑟克啊啊啊啊啊啊啊啊",
-                    "gold":2000,
-                    "myLevel":6600,
-                    "online":1,
-                    "disabled":0,
-                    "email":"491925129@qq.com",
-                    "mobile":"18086526257",
-                    "likeTag":"",
-                    "loginAt":"2018-11-16 12:00:00",
-                    "loginIp":"127.0.0.1",
-                    "loginCount":123,
-                    "loginTheme":"theme2.css",
-                    "avatarUrl":"static/user.jpg",
-                    "opBy":"admin",
-                    "opAt":"2018-11-15 09:00:00",
-                    "delFlag":0
-                },
+                userInfo:{},
                 tagDrawer:false,
-                tagList:[]
+                tagList:[],
+                uploadAction:api.uploadApi,
+                spinShow:false,
+                visible: false
+            }
+        },
+        computed: {
+            storeUserInfo: {
+               set (value) {
+                  this.$store.commit('setUserInfo',value)
+               },
+               get(){
+                   return this.$store.state.userInfo;
+               }
             }
         },
         filters:{
             ellipsis(value){
+                if(value == null){
+                    return "";
+                }
                 if (value.length > 5) {
                     return value.slice(0,8) + '...';
                 }
                 return value
             },
             level(value){
-                if (0<value&&value<100) {
+                if (0<=value&&value<100) {
                     return i18n.t('userCenter').level1
                 }else if(100<=value&&value<1000){
                     return i18n.t('userCenter').level2
@@ -161,6 +195,8 @@
             }
         },
         mounted(){
+            // 从store中拿用户信息
+            this.userInfo = this.storeUserInfo;
             if(this.userInfo.likeTag != "" && this.userInfo.likeTag != null){
                 this.tagList = this.userInfo.likeTag.split(',');
             }
@@ -181,6 +217,30 @@
             updateTags(){
                 this.userInfo.likeTag = this.tagList.join(',');
                 this.tagDrawer = false;
+            },
+            handleView () {
+                this.visible = true;
+            },
+            handleSuccess(res){
+                // todo 服务器端更新头像链接
+                if (res.code == 200) {
+                    // 当前页面更新头像
+                    // 更新用户信息
+                    var userInfo = mySessionStorage.get("userInfo");
+                    userInfo.avatarUrl = api.downloadApi+res.data.fileId;
+                    mySessionStorage.set("userInfo",userInfo);
+                    this.storeUserInfo = userInfo;
+                    this.spinShow = false;
+                }else{
+                    this.$Message.error('图片上传失败！');
+                    this.spinShow = false;
+                }
+            },
+            handleFormatError(file){
+
+            },
+            handleBeforeUpload(file){
+                this.spinShow = true;
             }
         }
     }

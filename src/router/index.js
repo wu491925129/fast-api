@@ -22,6 +22,8 @@ const turnTo = (to, access, next) => {
 
 // 登陆拦截
 router.beforeEach((to, from, next) => {
+  // 将sessionStorage中的用户信息实时缓存到store中
+  store.commit("setUserInfo",mySessionStorage.get("userInfo"));
   iView.LoadingBar.start();
   const token = mySessionStorage.get('auth_token');
   // 退出
