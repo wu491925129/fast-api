@@ -36,16 +36,16 @@
                                     <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
                                 </div>
                             </div>
-                            
+
                         </Badge>
                     </Col>
                     <Col span="12">
-                        <div class="user-name" 
+                        <div class="user-name"
                              :title="userInfo.userName"
                              v-if="userInfo.displayName == null||userInfo.displayName == ''">
                             {{userInfo.userName | ellipsis}}
                         </div>
-                        <div class="user-name" 
+                        <div class="user-name"
                              :title="userInfo.displayName"
                              v-else>
                             {{userInfo.displayName | ellipsis}}
@@ -63,12 +63,12 @@
                             {{$t('userCenter').subLabel}}：<br>
                             <Tag v-if="userInfo.likeTag == null||userInfo.likeTag==''"></Tag>
                             <Tag v-else
-                                 color="primary" 
-                                 closable 
+                                 color="primary"
+                                 closable
                                  v-for="(tag,index) in (userInfo.likeTag).split(',')"
                                  @on-close="delTag(tag,index)"
                                  :key="'tag_'+index">
-                                <Icon type="ios-pricetags-outline" /> 
+                                <Icon type="ios-pricetags-outline" />
                                 {{tag}}
                             </Tag>
                             <Button icon="ios-add" type="dashed" size="small" @click="tagAdd">
@@ -111,7 +111,7 @@
             :title="$t('userCenter').tagDrawer"
             v-model="tagDrawer"
             width="30%"
-            closable 
+            closable
             class="tag-drawer">
             {{tagList}}
             <Row>
@@ -121,8 +121,8 @@
                         <span class="title">{{item.name}}&nbsp;&nbsp;</span>
                     </h2>
                     <CheckboxGroup v-model="tagList">
-                        <Checkbox size="large" 
-                                  v-for="(tag,index1) in item.list" 
+                        <Checkbox size="large"
+                                  v-for="(tag,index1) in item.list"
                                   :label="$t('userCenter').tagList[index].list[index1]"
                                   :key="index1">
                         </Checkbox>
@@ -136,7 +136,7 @@
         </Drawer>
         <Modal title="头像详情" v-model="visible">
             <img :src="storeUserInfo.avatarUrl" v-if="visible" style="width: 100%">
-        </Modal>  
+        </Modal>
     </Row>
 </template>
 <script>
@@ -231,6 +231,21 @@
                     mySessionStorage.set("userInfo",userInfo);
                     this.storeUserInfo = userInfo;
                     this.spinShow = false;
+                    myAjax.post({
+                        url:api.changeAvatarApi,
+                        type:"POST",
+                        data:{userName:userInfo.userName,avatarUrl:userInfo.avatarUrl},
+                        success:(res)=>{  // 成功
+                            if (res.code == 200) {
+                                this.$Message.success('头像更新成功！');
+                            }else{
+                                this.$Message.error('头像更新失败！');
+                            }
+                        },
+                        fail:(err)=>{     // 失败
+                            console.log(err);
+                        }
+                    })
                 }else{
                     this.$Message.error('图片上传失败！');
                     this.spinShow = false;

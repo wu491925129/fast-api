@@ -59,8 +59,8 @@ var myAjax = {
             url: options.url,   //请求url
             type: 'POST',  //全部用POST
             async:options.async,
-            data:options.data,
-            contentType:'application/json;charset=utf-8',
+            data:options.data,  // 参数
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
             dataType:options.dataType, // 返回值类型
             beforeSend: function(request) {
                 request.setRequestHeader("auth_token", authToken);

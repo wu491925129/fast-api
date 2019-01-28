@@ -12,7 +12,7 @@
     .layout-logo img{
         margin-bottom: 15px;
         width: 100px;
-        height: 30px; 
+        height: 30px;
     }
     .layout-nav{
         float: right;
@@ -91,13 +91,13 @@
             <Header>
                 <Menu mode="horizontal" theme="dark" active-name="1">
                     <div class="layout-logo">
-                        <img src="../assets/images/logo.png"> 
+                        <img src="../assets/images/logo.png">
                     </div>
                     <div class="layout-nav">
                         <!-- 选项 -->
-                        <MenuItem 
-                            v-for="(item,index) in navList" 
-                            :key="index" 
+                        <MenuItem
+                            v-for="(item,index) in navList"
+                            :key="index"
                             :name="'1-'+index"
                             v-if="!item.hidden">
                             <Icon :type="item.icon"></Icon>
@@ -111,9 +111,9 @@
                             </template>
                             <!-- click.native 普通的click监听不生效，
                                 故使用click.native监听原生点击事件 -->
-                            <MenuItem 
-                                v-for="(item,index) in langs" 
-                                :key="index" 
+                            <MenuItem
+                                v-for="(item,index) in langs"
+                                :key="index"
                                 :name="'5-'+index"
                                 @click.native="changeLanguage(item.code)">
                                 {{item.name}}
@@ -131,9 +131,9 @@
                             </template>
                             <!-- click.native 普通的click监听不生效，
                                 故使用click.native监听原生点击事件 -->
-                            <MenuItem 
-                                v-for="(item,index) in userInfo" 
-                                :key="index" 
+                            <MenuItem
+                                v-for="(item,index) in userInfo"
+                                :key="index"
                                 :name="'5-'+index"
                                 @click.native="getUser(item.url)">
                                 {{item.name}}
@@ -143,13 +143,13 @@
                 </Menu>
             </Header>
         </Layout>
-        
+
         <Layout style="height:100%">
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
                 <Menu active-name="2" theme="dark" width="auto" :class="menuitemClasses">
-                    <MenuItem 
-                        v-for="(item,index) in sliderList" 
-                        :key="index" 
+                    <MenuItem
+                        v-for="(item,index) in sliderList"
+                        :key="index"
                         :name="index"
                         v-if="!item.hidden">
                         <Icon :type="item.icon"></Icon>

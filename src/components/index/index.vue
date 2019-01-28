@@ -83,7 +83,7 @@
                 dataTotal:0,
                 dataColumns: [],
                 dataList:[],
-                tempDataList:[]
+                tempDataList:[],
             }
         },
         components: {

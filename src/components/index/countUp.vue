@@ -45,7 +45,7 @@
           data() {
             return {
               unit: '',
-              demo: {}
+              demo: {},
             };
           },
           name: 'countUp',

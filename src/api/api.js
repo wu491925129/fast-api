@@ -46,7 +46,9 @@ export const api = {
 
     getFileList:baseUrl+'/upload/info/list',
 
-    uploadStatusApi:baseUrl+'/upload/info/add'
+    uploadStatusApi:baseUrl+'/upload/info/add',
+
+    changeAvatarApi:baseUrl+'/user/info/changeAvatar'
 
 
 }
